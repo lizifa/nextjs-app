@@ -1,0 +1,52 @@
+.typing-text {
+  overflow: hidden; /* 隐藏超出容器的文字 */
+  white-space: nowrap; /* 防止文字换行 */
+}
+
+.typing-text span {
+  display: inline-block; /* 让span元素水平显示 */
+  opacity: 0; /* 初始化文字不可见 */
+  animation: typing 1s steps(1) infinite; /* 应用打字动画 */
+}
+
+/* 每个span元素依次显示的动画 */
+@keyframes typing {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* 延迟不同的时间显示每个字符 */
+.typing-text span:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.typing-text span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.typing-text span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.typing-text span:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.typing-text span:nth-child(5) {
+  animation-delay: 0.5s;
+}
+.typing-text span:nth-child(6) {
+  animation-delay: 0.6s;
+}
+.typing-text span:nth-child(7) {
+  animation-delay: 0.7s;
+}
+.typing-text span:nth-child(8) {
+  animation-delay: 0.8s;
+}
+.typing-text span:nth-child(9) {
+  animation-delay: 0.9s;
+}
+.typing-text span:nth-child(10) {
+  animation-delay: 1s;
+}
