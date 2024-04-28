@@ -5,9 +5,11 @@ const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "http://localhost:3001";
 
+
+console.log(process.env)
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: `Genie AI ${process.env.NEXT_PUBLIC_SUPABASE_ENV}`,
+  title: `Genie AI ${process.env.VERCEL_ENV}`,
   description: "The fastest way to build apps with Next.js and Supabase",
 };
 

@@ -10,7 +10,7 @@ export default async function Page() {
     <div>
       <ul className="divide-y divide-gray-200">
         {notes?.map((item: any) => (
-          <li key={person.email} className="py-4 flex">
+          <li key={item.email} className="py-4 flex">
             <div className="ml-3">
               <p className="text-sm font-medium text-gray-900">{item.title}</p>
             </div>
