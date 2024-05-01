@@ -6,14 +6,11 @@ const headers = { Authorization: `Bearer ${env.VENDOR_AUTH_CODE}`, Accept: 'appl
 // 获取商品价格
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
-    return
     let products = []
     try {
-      const url = `${env.PADDLE_URL}/prices?status=active}`
-      const res0 = await axios({ method: 'GET', url, headers })
-      console.log(res0, 'kkk')
-      // products = res0?.data?.data || []
-      res.status(200).json([]);
+      const res0 = await axios({ method: 'GET', url: `${env.PADDLE_URL}/prices`, headers })
+      products = res0?.data?.data || []
+      res.status(200).json(products);
     } catch (e) {
       res.status(500).json({ error: 'Internal Server Error' });
     }
