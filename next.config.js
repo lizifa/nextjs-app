@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-};
 
-module.exports = nextConfig;
+module.exports = (_phase, { defaultConfig }) => {
+  return Object.assign(defaultConfig, {
+    env: {
+      LIZIFA: 'my-value',
+    },
+  })
+}

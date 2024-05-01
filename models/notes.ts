@@ -5,13 +5,13 @@ export async function useHooks() {
   const supabase = createClient()
 
   // 获取帖子列表
-  async function getNotes() {
-    const { data: notes } = await supabase.from('notes').select()
+  async function getNotesLists() {
+    const { data: notes } = await supabase.from('notes').select('*')
     return notes
   }
 
   // 新增帖子
-  async function addNote() {
+  async function createNodes() {
     try {
       const data = { title: 'Your Title Here' };
       const { data: note, error } = await supabase.from('notes').insert(data).single();
@@ -27,7 +27,7 @@ export async function useHooks() {
   }
 
   // 删除指定 ID 的笔记
-  async function deleteNote(id: number) {
+  async function deleteNotes(id: number) {
     try {
       const { data, error } = await supabase
         .from('notes')
@@ -45,7 +45,7 @@ export async function useHooks() {
   }
 
   // 更新指定 ID 的笔记标题
-  async function updateNoteTitle(id: number, newTitle: string) {
+  async function updateNotes(id: number, newTitle: string) {
     try {
       const { data, error } = await supabase
         .from('notes')
@@ -62,7 +62,17 @@ export async function useHooks() {
     }
   }
 
+  // 获取帖子列表
+  async function getNotesDetail() {
+    const { data: notes } = await supabase.from('notes').select('*')
+    return notes
+  }
+
   return {
-    getNotes, addNote, deleteNote, updateNoteTitle
+    getNotesLists,
+    createNodes,
+    deleteNotes,
+    updateNotes,
+    getNotesDetail
   }
 }

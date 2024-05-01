@@ -1,15 +1,14 @@
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
+import env from '@/env'
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "http://localhost:3001";
 
-
-console.log(process.env)
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: `Genie AI ${process.env.VERCEL_ENV}`,
+  title: `Genie AI ${env.NEXT_PUBLIC_SUPABASE_ENV}`,
   description: "The fastest way to build apps with Next.js and Supabase",
 };
 

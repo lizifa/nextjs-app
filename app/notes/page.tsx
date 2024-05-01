@@ -1,10 +1,10 @@
 'use server'
 
-import { useHooks } from "./actions"
+import { useHooks } from "@/models/notes"
 
 export default async function Page() {
-  const { getNotes } = await useHooks()
-  const notes = await getNotes()
+  const { getNotesLists } = await useHooks()
+  const notes = await getNotesLists()
 
   return (
     <div>
