@@ -17,8 +17,8 @@ interface IProduct {
   created_at: string,
   updated_at: string
   [propname: string]: any
-
 }
+
 const get_products = async (cb = (list: IProduct[]) => { }) => {
   const res = await axios({
     method: 'POST',
@@ -47,10 +47,9 @@ export default function Page() {
 
   const openCheckout = async (product: IProduct) => {
     const { priceInfo = {} } = product
-    console.log(priceInfo)
     const items = [
       {
-        priceId: 'pri_01hwn5hy2p9afdv7b0tcmkgzxa',
+        priceId: priceInfo.id,
         quantity: 1
       }
     ];

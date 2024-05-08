@@ -12,6 +12,8 @@
     "@supabase/supabase-js": "latest",
     "autoprefixer": "10.4.17",
     "axios": "^1.6.8",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "geist": "^1.2.1",
     "next": "latest",
     "paddle-sdk": "^4.6.2",
@@ -22,6 +24,7 @@
     "typescript": "5.3.3"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/node": "20.11.5",
     "@types/react": "18.2.48",
     "@types/react-dom": "18.2.18",
