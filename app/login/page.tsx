@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { headers } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
@@ -15,7 +14,6 @@ const signIn = async (formData: FormData) => {
     email,
     password,
   });
-  console.log(error)
 
   if (error) {
     return redirect("/login?message=Could not authenticate user");

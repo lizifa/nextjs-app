@@ -1,12 +1,22 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import env from '@/env';
+'use server'
 import axios from 'axios';
+import env from '@/env';
+// import { createClient } from "@/utils/supabase/server";
+// import { redirect } from "next/navigation";
+
 const headers = { Authorization: `Bearer ${env.VENDOR_AUTH_CODE}`, Accept: 'application/json' }
 
-// 产品列表
-export default async function handler(_req: NextApiRequest, res: NextApiResponse) {
-  res.status(200).json([]);
+export async function get_products() {
   try {
+    // const supabase = createClient();
+
+    // const {
+    //   data: { user },
+    // } = await supabase.auth.getUser();
+    // console.log(user, 'llll')
+    // if (!user) {
+    //   return redirect("/login");
+    // }
     const url = `${env.PADDLE_URL}/products?status=active`
     const res0 = await axios({ method: 'GET', url, headers })
     const res1 = await axios({ method: 'GET', url: `${env.PADDLE_URL}/prices`, headers })
@@ -16,8 +26,8 @@ export default async function handler(_req: NextApiRequest, res: NextApiResponse
       const priceInfo = list1.find((item: any) => item.product_id === product.id)
       Object.assign(product, { priceInfo })
     });
-    res.status(200).json(list0);
+    return list0
   } catch (e) {
-    res.status(500).json({ error: 'Internal Server Error' });
+    return []
   }
 }

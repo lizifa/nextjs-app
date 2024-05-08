@@ -1,8 +1,8 @@
 'use client'
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { initializePaddle, Paddle } from '@paddle/paddle-js';
 import env from '@/env';
+import { get_products } from './actions';
+import Script from 'next/script'
 
 interface IProduct {
   id: string
@@ -19,31 +19,17 @@ interface IProduct {
   [propname: string]: any
 }
 
-const get_products = async (cb = (list: IProduct[]) => { }) => {
-  const res = await axios({
-    method: 'POST',
-    url: '/api/get_products'
-  })
-  cb(res?.data)
-}
 
 export default function Page() {
   const [products, setProducts] = useState<IProduct[]>([])
-  const [paddle, setPaddle] = useState<Paddle>();
 
   useEffect(() => {
-    get_products(setProducts)
+    const init = async () => {
+      const list: IProduct[] = await get_products()
+      setProducts(list)
+    }
+    init()
   }, [])
-
-  useEffect(() => {
-    initializePaddle({ environment: 'sandbox', token: env.PADDLE_CLIENT_TOKEN }).then(
-      (paddleInstance: Paddle | undefined) => {
-        if (paddleInstance) {
-          setPaddle(paddleInstance);
-        }
-      },
-    );
-  }, []);
 
   const openCheckout = async (product: IProduct) => {
     const { priceInfo = {} } = product
@@ -54,7 +40,8 @@ export default function Page() {
       }
     ];
 
-    const customer = {
+    // define customer details
+    let customer = {
       email: "sam@example.com",
       address: {
         countryCode: "US",
@@ -62,25 +49,37 @@ export default function Page() {
       }
     };
 
-    paddle?.Checkout?.open({
-      customer,
+    window?.Paddle?.Checkout?.open({
       items,
+      customer
     });
   };
 
   return (
     <div >
-      {
-        products.map((item: any) => {
-          return (
-            <div key={item.id}>
-              <button onClick={() => openCheckout(item)}>
-                Sign up now {item.id}
-              </button>
-            </div>
-          )
-        })
-      }
+      <Script
+        id="paddle-js"
+        src="./js/paddle.js"
+        onLoad={() => {
+          window?.Paddle?.Environment.set(env.PADDLE_ENV);
+          window?.Paddle?.Initialize({
+            token: env.PADDLE_CLIENT_TOKEN,
+          });
+        }}
+      />
+      <div className="checkout-container">
+        {
+          products.map((item: any) => {
+            return (
+              <div key={item.id}>
+                <button onClick={() => openCheckout(item)}>
+                  Sign up now {item.id}
+                </button>
+              </div>
+            )
+          })
+        }
+      </div>
     </div >
   );
 } 
