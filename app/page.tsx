@@ -8,16 +8,21 @@ const canInitSupabaseClient = () => {
   // This function is just for the interactive tutorial.
   // Feel free to remove it once you have Supabase connected.
   try {
-    createClient();
-    return true;
+    const supabase = createClient();
+    return { isSupabaseConnected: true, supabase };
   } catch (e) {
-    return false;
+    return { isSupabaseConnected: false, supabase: null };
   }
 };
 
 export default async function Index() {
 
-  const isSupabaseConnected = canInitSupabaseClient();
+  const { isSupabaseConnected, supabase } = canInitSupabaseClient();
+  const res = await supabase
+    ?.from('users')
+    .select('*')
+    .eq('email', '550083126@qq.com');
+  console.log(res)
 
   return (
     <div className="flex-1 w-full flex flex-col gap-20 items-center">

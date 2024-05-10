@@ -3,32 +3,30 @@ import { useEffect, useState } from 'react';
 import env from '@/env';
 import { get_products } from './actions';
 import Script from 'next/script'
-
-interface IProduct {
-  id: string
-  name: string
-  tax_category: string
-  type: 'custom' | 'standard'
-  description: string | null
-  image_url: string | null
-  custom_data: object | null
-  status: 'active' | 'archived',
-  import_meta: object | null,
-  created_at: string,
-  updated_at: string
-  [propname: string]: any
-}
-
+import { createClient } from "@/utils/supabase/client";
+import { useRouter } from 'next/navigation'
 
 export default function Page() {
+  const supabase = createClient();
+  const router = useRouter()
+
   const [products, setProducts] = useState<IProduct[]>([])
 
   useEffect(() => {
     const init = async () => {
+
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) {
+        return router.push("/login");
+      }
       const list: IProduct[] = await get_products()
       setProducts(list)
     }
     init()
+    console.log(supabase.auth.getUser())
   }, [])
 
   const openCheckout = async (product: IProduct) => {
@@ -40,18 +38,15 @@ export default function Page() {
       }
     ];
 
-    // define customer details
-    let customer = {
-      email: "sam@example.com",
-      address: {
-        countryCode: "US",
-        postalCode: "10021"
-      }
-    };
-
     window?.Paddle?.Checkout?.open({
       items,
-      customer
+      customer: {
+        email: "550083126@qq.com",
+        address: {
+          countryCode: "US",
+          postalCode: "10021"
+        }
+      }
     });
   };
 

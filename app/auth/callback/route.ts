@@ -10,7 +10,6 @@ export async function GET(request: Request) {
   const origin = requestUrl.origin;
 
   if (code) {
-    console.log(code)
     const supabase = createClient();
     await supabase.auth.exchangeCodeForSession(code);
   }
